@@ -87,12 +87,18 @@ void remove(Database &database, std::string &key) {
 // 데이터베이스를 해제한다.
 void destroy(Database &database) {
     // database의 size만큼 entryArray를 동적 해제
-    for (int i = 0; i > database.size; i++) {
+    for (int i = 0; i < database.size; i++) {
+        //entryDestroy(database.entryArray[i]);
         delete database.entryArray[i];
     }
     delete[] database.entryArray;
 }
 
+void entryDestroy(Entry* entry) {
+    if (entry->type == ARRAY) {
+        delete static_cast<Array*>(entry->value);
+    }
+}
 
 // 데이터베이스의 내용을 모두 출력한다.
 void printDB(Database &database) {

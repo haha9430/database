@@ -117,23 +117,41 @@ void logic() {
         // vInt를 동적 할당
         vInt = new int;
         *vInt = inputI();
-        Entry* entry = create(INT, k, vInt);
-        add(database, entry);
+        if (get(database, k) == nullptr) {
+          Entry* entry = create(INT, k, vInt);
+          add(database, entry);
+        }else {
+          remove(database, k);
+          Entry* entry = create(INT, k, vInt);
+          add(database, entry);
+        }
       // type이 double일 때
       }else if (t.compare(type[1]) == 0) {
         // vDouble를 동적 할당
         vDouble = new double;
         *vDouble = inputD();
-        Entry* entry = create(DOUBLE, k, vDouble);
-        add(database, entry);
+        if (get(database, k) == nullptr) {
+          Entry* entry = create(DOUBLE, k, vDouble);
+          add(database, entry);
+        }else {
+          remove(database, k);
+          Entry* entry = create(DOUBLE, k, vDouble);
+          add(database, entry);
+        }
       // type이 string일 때
       }else if (t.compare(type[2]) == 0) {
         // vString를 동적 할당
         vString = new string;
         cin.ignore();
         getline(cin, *vString);
-        Entry* entry = create(STRING, k, vString);
-        add(database, entry);
+        if (get(database, k) == nullptr) {
+          Entry* entry = create(STRING, k, vString);
+          add(database, entry);
+        }else {
+          remove(database, k);
+          Entry* entry = create(STRING, k, vString);
+          add(database, entry);
+        }
       // type이 array일 때
       }else if (t.compare(type[3]) == 0) {
         // array의 type을 input
@@ -145,9 +163,14 @@ void logic() {
         if (arrayT.compare(type[0]) == 0 || arrayT.compare(type[1]) == 0 || arrayT.compare(type[2]) == 0 || arrayT.compare(type[3]) == 0) {
           // array를 input
           Array* array = inputA(arrayT);
-          Entry* entry = create(ARRAY, k, array);
-          // entry에 array를 넣은 다음 database에 add
-          add(database, entry);
+          if (get(database, k) == nullptr) {
+            Entry* entry = create(ARRAY, k, array);
+            add(database, entry);
+          }else {
+            remove(database, k);
+            Entry* entry = create(ARRAY, k, array);
+            add(database, entry);
+          }
         // type이 그 외일 때
         }else {
           // 다시 입력
